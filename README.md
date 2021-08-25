@@ -1,6 +1,6 @@
-# moveme
+# what is it
 
-Rename your media files with proper format which Jellyfin can easily recognize.
+Rename your TV series or Anime series media files with proper format, then they are more friendly with Jellyfin.
 
 ## how to use it
 
