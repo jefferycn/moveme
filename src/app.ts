@@ -7,7 +7,13 @@ import {MediaPreview} from './model/MediaPreview';
 import {Prompt} from './model/Prompt';
 
 (async () => {
-  const path = process.cwd();
+  let path: string;
+  try {
+    path = process.cwd();
+  } catch {
+    console.log('path can not be accessed.');
+    return;
+  }
   const files = await fs.promise(path, {fileFilter: fileMatchers});
 
   const preview = new MediaPreview(path);

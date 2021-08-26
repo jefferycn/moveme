@@ -6,6 +6,7 @@ import {stats} from '../helpers/types';
 
 export class MediaPreview {
   path: string;
+  targetPath: string;
   title = '';
   seasons: Season[] = [];
   totalEpisodes = 0;
@@ -14,6 +15,7 @@ export class MediaPreview {
 
   constructor(path: string) {
     this.path = path;
+    this.targetPath = path;
   }
 
   isEmpty() {
@@ -50,9 +52,31 @@ export class MediaPreview {
 
   setTitle(title: string) {
     this.title = title;
+    this.setSeasonFieldData('setTitle', title);
+  }
+
+  setTargetPath(path: string) {
+    this.targetPath = path;
+    this.setSeasonFieldData('setTargetPath', path);
+  }
+
+  setSeasonNumber(number: string) {
+    this.setSeasonFieldData('setSeasonNumber', number);
+  }
+
+  setSeasonFieldData(
+    method: 'setTargetPath' | 'setTitle' | 'setSeasonNumber',
+    value: string
+  ) {
     this.seasons = this.seasons.map(season => {
-      season.episodes.map(episode => {
-        episode.setTitle(title);
+      season.episodes.map((episode: Episode) => {
+        if (method === 'setSeasonNumber') {
+          episode.setSeasonNumber(+value);
+        } else if (method === 'setTitle') {
+          episode.setTitle(value);
+        } else if (method === 'setTargetPath') {
+          episode.setTargetPath(value);
+        }
         return episode;
       });
       return season;
@@ -66,7 +90,7 @@ export class MediaPreview {
           episode.getNewFullName()
         )}`;
       });
-      console.log(season.getPreview());
+      season.getPreview();
       if (episodes.length > 0) {
         console.log(episodes);
       } else {

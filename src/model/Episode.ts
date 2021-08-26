@@ -17,6 +17,7 @@ import {SPECIAL_SEASON} from '../helpers/constants';
 
 export class Episode {
   path = '';
+  private targetPath: string;
   fileName: string;
   episode = 0;
   episodeDelta = 0;
@@ -27,8 +28,10 @@ export class Episode {
   constructor(fileName: string, path: string) {
     this.fileName = fileName;
     this.path = path;
+    this.targetPath = path;
     this.init();
   }
+
   getEpisode = (input: string): MatchResult | null =>
     getResultByMatcher(input, episodeMatchers);
 
@@ -87,8 +90,20 @@ export class Episode {
     return dirname(this.getNewFullName());
   }
 
+  setTargetPath(path: string) {
+    this.targetPath = path;
+  }
+
+  setSeasonNumber(v: number) {
+    this.seasonNumber = v;
+  }
+
   setTitle(title: string) {
     this.title = title;
+  }
+
+  getTitle() {
+    return this.title;
   }
 
   getSeasonPath() {
@@ -104,12 +119,21 @@ export class Episode {
     return 'Season ' + paddingLeft(this.seasonNumber, '00');
   }
 
+  getWorkingDirectory() {
+    const targetPath = this.targetPath;
+    const match = targetPath.match(new RegExp(this.getTitle(), 'i'));
+    if (!match) {
+      return resolve(targetPath, this.getTitle(), this.getSeasonPath());
+    }
+    return resolve(targetPath, this.getSeasonPath());
+  }
+
   getOriginalFullName() {
     return resolve(this.path, this.fileName);
   }
 
   getNewFullName() {
-    return resolve(this.path, this.getSeasonPath(), this.getEpisodeFileName());
+    return resolve(this.getWorkingDirectory(), this.getEpisodeFileName());
   }
 
   getEpisodeFileName() {

@@ -1,5 +1,5 @@
 export const fileMatchers = ['*.mkv', '*.mp4', '*.ass', '*.ssa', '*.srt'];
-export const seasonMatchers = [/season ?(0?[1-9])/i];
+export const seasonMatchers = [/season ?(0?[1-9])/i, /第?([0-9]{1,2})季/];
 export const episodeMatchers = [
   /(?:s0?[0-9])?(?:e|sp|ep)([.0-9]{1,4})/i,
   /第?[0-9]{1,2}集/,

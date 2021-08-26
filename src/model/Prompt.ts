@@ -12,6 +12,8 @@ export class Prompt {
       choices: [
         {title: 'Proceed', value: 'proceed'},
         {title: 'Change title', value: 'change_title'},
+        {title: 'Set Season number', value: 'set_season_number'},
+        {title: 'Set move path', value: 'set_target_path'},
         {title: 'Set Episode Delta', value: 'set_episode_delta'},
         {title: 'Quit', value: 'quit'},
       ],
@@ -36,9 +38,12 @@ export class Prompt {
       case 'change_title':
         this.preview.setTitle(await this.askFor('Media Title'));
         break;
-      // case 'change_year':
-      //   preview.setYear(+(await askFor('Media Year')));
-      //   break;
+      case 'set_target_path':
+        this.preview.setTargetPath(await this.askFor('Path to move'));
+        break;
+      case 'set_season_number':
+        this.preview.setSeasonNumber(await this.askFor('Season Number'));
+        break;
       case 'set_episode_delta':
         this.preview.setEpisodeDelta(
           +(await this.askFor('First episode number'))

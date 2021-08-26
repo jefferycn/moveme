@@ -27,7 +27,16 @@ export class Season {
     return this.episodes.filter((v: Episode) => !v.isSame());
   }
 
+  getWorkingDirectory() {
+    return this.episodes[0].getWorkingDirectory();
+  }
+
   getPreview() {
+    console.log('Season: ' + this.getSeasonName());
+    console.log('Working Directory: ' + this.getWorkingDirectory());
+  }
+
+  getSeasonName() {
     if (this.seasonNumber === 0) {
       return SPECIAL_SEASON;
     }
